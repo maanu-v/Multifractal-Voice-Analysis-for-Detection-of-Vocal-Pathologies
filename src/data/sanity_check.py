@@ -5,7 +5,10 @@ from scipy.io import wavfile
 from pathlib import Path
 import random
 
-from src.config import AUDIO_DIR, LABELS_CSV, FIGURES_DIR
+from src.utils.logger import get_logger
+from src.utils.config import AUDIO_DIR, LABELS_CSV, FIGURES_DIR
+
+logger = get_logger(__name__)
 
 def check_signal_stats(audio_dir, labels_file, num_samples=3):
     """
@@ -16,30 +19,30 @@ def check_signal_stats(audio_dir, labels_file, num_samples=3):
     
     # Load labels
     df = pd.read_csv(labels_file)
-    print(f"Loaded {len(df)} entries from {labels_file}")
+    logger.info(f"Loaded {len(df)} entries from {labels_file}")
     
     # Check 10: Speaker Uniqueness
     unique_speakers = df['speaker_id'].nunique()
     total_files = len(df)
-    print(f"\n--- Speaker Uniqueness Check ---")
-    print(f"Total Files: {total_files}")
-    print(f"Unique Speakers: {unique_speakers}")
+    logger.info(f"\n--- Speaker Uniqueness Check ---")
+    logger.info(f"Total Files: {total_files}")
+    logger.info(f"Unique Speakers: {unique_speakers}")
     if unique_speakers == total_files:
-        print("✅ PASS: One file per speaker.")
+        logger.info("✅ PASS: One file per speaker.")
     else:
-        print(f"❌ FAIL: {total_files - unique_speakers} duplicate speakers found!")
+        logger.warning(f"❌ FAIL: {total_files - unique_speakers} duplicate speakers found!")
 
     # Check 9: Class Balance
-    print(f"\n--- Class Balance ---")
-    print(df['category'].value_counts())
+    logger.info(f"\n--- Class Balance ---")
+    print(df['category'].value_counts()) # keeping print for dataframe output mostly, or logger info str
     
     # Sample files for detailed inspection
     categories = df['category'].unique()
     
-    print(f"\n--- Detailed Signal Inspection (Sample of {num_samples} per class) ---")
+    logger.info(f"\n--- Detailed Signal Inspection (Sample of {num_samples} per class) ---")
     
     for category in categories:
-        print(f"\nCategory: {category}")
+        logger.info(f"\nCategory: {category}")
         subset = df[df['category'] == category]
         samples = subset.sample(min(num_samples, len(subset)))
         
@@ -72,11 +75,11 @@ def check_signal_stats(audio_dir, labels_file, num_samples=3):
                 silence_thresh = 0.001 # Arbitrary low energy threshold
                 silence_prop = np.mean(energy < silence_thresh)
                 
-                print(f"  File: {filename}")
-                print(f"    SR: {sample_rate} Hz, Type: {data.dtype}")
-                print(f"    Duration: {duration:.2f}s")
-                print(f"    Range: [{min_val}, {max_val}], Mean: {mean_val:.2f}, Std: {std_val:.2f}")
-                print(f"    Silence Prop: {silence_prop:.2%}")
+                logger.info(f"  File: {filename}")
+                logger.info(f"    SR: {sample_rate} Hz, Type: {data.dtype}")
+                logger.info(f"    Duration: {duration:.2f}s")
+                logger.info(f"    Range: [{min_val}, {max_val}], Mean: {mean_val:.2f}, Std: {std_val:.2f}")
+                logger.info(f"    Silence Prop: {silence_prop:.2%}")
                 
                 # Check 4 & 8: Plots
                 plt.figure(figsize=(10, 4))
@@ -100,10 +103,10 @@ def check_signal_stats(audio_dir, labels_file, num_samples=3):
                 plot_filename = figures_dir / f"analysis_{category}_{filename}.png"
                 plt.savefig(plot_filename)
                 plt.close()
-                print(f"    Plot saved to: {plot_filename}")
+                logger.info(f"    Plot saved to: {plot_filename}")
                 
             except Exception as e:
-                print(f"    Error analyzing {filename}: {e}")
+                logger.error(f"    Error analyzing {filename}: {e}")
 
 if __name__ == "__main__":
     check_signal_stats(AUDIO_DIR, LABELS_CSV)

@@ -1,12 +1,8 @@
 import pandas as pd
-import logging
-from src.config import BASELINE_FEATURES_CSV, MFCC_FEATURES_CSV, CLASSIC_FEATURES_CSV
+from src.utils.logger import get_logger
+from src.utils.config import BASELINE_FEATURES_CSV, MFCC_FEATURES_CSV, CLASSIC_FEATURES_CSV
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 def main():
     logger.info("Loading feature files...")

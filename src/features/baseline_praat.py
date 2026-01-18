@@ -1,16 +1,12 @@
-import parselmouth
-import numpy as np
-import pandas as pd
-from pathlib import Path
-from tqdm import tqdm
 from typing import Dict, Union, Any
-import logging
-
-from src.config import (
+from src.utils.logger import get_logger
+from src.utils.config import (
     AUDIO_DIR, LABELS_CSV, BASELINE_FEATURES_CSV,
     PRAAT_PITCH_FLOOR, PRAAT_PITCH_CEILING, 
     PRAAT_SILENCE_THRESHOLD, PRAAT_VOICING_THRESHOLD
 )
+
+logger = get_logger(__name__)
 
 # -----------------------------
 # Configuration
@@ -29,13 +25,6 @@ VOICED_UNVOICED_COST = 0.14
 # Paths
 # -----------------------------
 OUTPUT_CSV = BASELINE_FEATURES_CSV
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 # -----------------------------
 # Feature extraction function

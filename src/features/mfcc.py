@@ -1,18 +1,13 @@
-import librosa
-import numpy as np
-import pandas as pd
-from pathlib import Path
-from tqdm import tqdm
-from typing import Dict, Union
-import logging
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from src.config import (
+from src.utils.logger import get_logger
+from src.utils.config import (
     AUDIO_DIR, LABELS_CSV, MFCC_FEATURES_CSV, MFCC_REPORTS_DIR,
     TARGET_SR, MFCC_N_MFCC, MFCC_N_FFT, MFCC_HOP_LENGTH
 )
+
+logger = get_logger(__name__)
 
 # -----------------------------
 # Configuration
@@ -28,13 +23,6 @@ HOP_LENGTH = MFCC_HOP_LENGTH
 OUTPUT_CSV = MFCC_FEATURES_CSV
 REPORTS_DIR = MFCC_REPORTS_DIR
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
 
 # -----------------------------
 # MFCC extraction function

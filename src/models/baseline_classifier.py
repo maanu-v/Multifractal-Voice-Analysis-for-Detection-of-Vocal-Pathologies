@@ -11,14 +11,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 from sklearn.impute import SimpleImputer
 
-from src.config import CLASSIC_FEATURES_CSV, BASELINE_MODEL_DIR
+from src.utils.logger import get_logger
+from src.utils.config import CLASSIC_FEATURES_CSV, BASELINE_MODEL_DIR, REPORTS_DIR
 
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+logger = get_logger(__name__)
 
 def plot_confusion_matrix(y_true, y_pred, title, filename):
     BASELINE_MODEL_DIR.mkdir(parents=True, exist_ok=True)

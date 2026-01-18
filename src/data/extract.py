@@ -6,7 +6,10 @@ from scipy.io import wavfile
 from collections import Counter
 from pathlib import Path
 
-from src.config import RAW_DATA_DIR, AUDIO_DIR, LABELS_CSV
+from src.utils.logger import get_logger
+from src.utils.config import RAW_DATA_DIR, AUDIO_DIR, LABELS_CSV
+
+logger = get_logger(__name__)
 
 def main():
     # Define paths
@@ -23,7 +26,7 @@ def main():
     seen_speakers = set()
     seen_filenames = set()
 
-    print(f"Scanning {raw_data_dir}...")
+    logger.info(f"Scanning {raw_data_dir}...")
 
     # Traverse the directory structure
     for category_path in raw_data_dir.iterdir():
@@ -31,6 +34,7 @@ def main():
             continue
         
         category = category_path.name
+        logger.info(f"Processing category: {category_path.name}")
         
         # Handle 'healthy' category which has a different structure:
         # data/raw/healthy/<SpeakerID>/vowels/<filename>

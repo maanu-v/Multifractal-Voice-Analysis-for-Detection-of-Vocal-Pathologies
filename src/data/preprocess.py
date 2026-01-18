@@ -3,16 +3,22 @@ from pathlib import Path
 from scipy.io import wavfile
 from scipy import signal
 import numpy as np
+from tqdm import tqdm
 
-def resample_and_normalize(audio_dir, target_sr=16000):
+from src.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
+def resample_and_normalize(audio_dir: Path, target_sr=16000):
     """
     Resamples all .wav files in the directory to the target sampling rate using polyphase filtering
     and performs peak normalization to [-1, 1].
     Overwrites the original files.
     """
-    print(f"Scanning {audio_dir} for resampling to {target_sr} Hz and normalization...")
+    files = list(audio_dir.glob("*.wav"))
+    logger.info(f"Scanning {audio_dir} for resampling to {target_sr} Hz and normalization...")
+    logger.info(f"Processing {len(files)} files in {audio_dir}...")
     
-    files = list(Path(audio_dir).glob("*.wav"))
     count = 0
     
     for file_path in files:
@@ -52,9 +58,9 @@ def resample_and_normalize(audio_dir, target_sr=16000):
         except Exception as e:
             print(f"Error processing {file_path.name}: {e}")
             
-    print(f"\nProcessing complete. Processed {count} files.")
+    logger.info(f"Processing complete. Processed {count} files.")
 
-from src.config import AUDIO_DIR, TARGET_SR
+from src.utils.config import AUDIO_DIR, TARGET_SR
 
 if __name__ == "__main__":
     audio_dir = AUDIO_DIR
