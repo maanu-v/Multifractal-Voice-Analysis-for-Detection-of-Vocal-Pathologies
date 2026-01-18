@@ -20,6 +20,8 @@ def main():
     audio_output_dir.mkdir(parents=True, exist_ok=True)
 
     extracted_data = []
+    seen_speakers = set()
+    seen_filenames = set()
 
     print(f"Scanning {raw_data_dir}...")
 
@@ -39,6 +41,11 @@ def main():
                     continue
                 
                 speaker_id = speaker_path.name
+
+                if speaker_id in seen_speakers:
+                    print(f"Skipping duplicate speaker: {speaker_id} in {category}")
+                    continue
+
                 vowels_path = speaker_path / "vowels"
                 
                 if not vowels_path.exists():
@@ -48,6 +55,11 @@ def main():
                 for file_path in vowels_path.glob("*-a_n.nsp"):
                     filename_stem = file_path.stem
                     filename = f"{filename_stem}.wav"
+
+                    if filename in seen_filenames:
+                        print(f"Skipping duplicate file: {filename}")
+                        continue
+
                     target_path = audio_output_dir / filename
                     
                     try:
@@ -64,6 +76,8 @@ def main():
                             "pathology": pathology,
                             "speaker_id": speaker_id
                         })
+                        seen_speakers.add(speaker_id)
+                        seen_filenames.add(filename)
                         print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
                     except Exception as e:
                         print(f"Error converting {file_path.name}: {e}")
@@ -82,6 +96,11 @@ def main():
                         continue
                     
                     speaker_id = speaker_path.name
+
+                    if speaker_id in seen_speakers:
+                        print(f"Skipping duplicate speaker: {speaker_id} in {category}/{pathology}")
+                        continue
+
                     vowels_path = speaker_path / "vowels"
                     
                     if not vowels_path.exists():
@@ -91,6 +110,11 @@ def main():
                     for file_path in vowels_path.glob("*-a_n.nsp"):
                         filename_stem = file_path.stem
                         filename = f"{filename_stem}.wav"
+
+                        if filename in seen_filenames:
+                            print(f"Skipping duplicate file: {filename}")
+                            continue
+
                         target_path = audio_output_dir / filename
                         
                         try:
@@ -107,6 +131,8 @@ def main():
                                 "pathology": pathology,
                                 "speaker_id": speaker_id
                             })
+                            seen_speakers.add(speaker_id)
+                            seen_filenames.add(filename)
                             print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
                         except Exception as e:
                             print(f"Error converting {file_path.name}: {e}")
