@@ -6,13 +6,13 @@ from scipy.io import wavfile
 from collections import Counter
 from pathlib import Path
 
+from src.config import RAW_DATA_DIR, AUDIO_DIR, LABELS_CSV
+
 def main():
     # Define paths
-    base_dir = Path(__file__).parent.parent.parent
-    raw_data_dir = base_dir / "data" / "raw"
-    processed_dir = base_dir / "data" / "processed"
-    audio_output_dir = processed_dir / "audio"
-    labels_file = processed_dir / "labels.csv"
+    raw_data_dir = RAW_DATA_DIR
+    audio_output_dir = AUDIO_DIR
+    labels_file = LABELS_CSV
 
     # Create output directories
     if audio_output_dir.exists():

@@ -54,11 +54,12 @@ def resample_and_normalize(audio_dir, target_sr=16000):
             
     print(f"\nProcessing complete. Processed {count} files.")
 
+from src.config import AUDIO_DIR, TARGET_SR
+
 if __name__ == "__main__":
-    base_dir = Path(__file__).parent.parent.parent
-    audio_dir = base_dir / "data" / "processed" / "audio"
+    audio_dir = AUDIO_DIR
     
     if audio_dir.exists():
-        resample_and_normalize(audio_dir)
+        resample_and_normalize(audio_dir, target_sr=TARGET_SR)
     else:
         print(f"Audio directory not found: {audio_dir}")

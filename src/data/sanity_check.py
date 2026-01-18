@@ -5,13 +5,14 @@ from scipy.io import wavfile
 from pathlib import Path
 import random
 
+from src.config import AUDIO_DIR, LABELS_CSV, FIGURES_DIR
+
 def check_signal_stats(audio_dir, labels_file, num_samples=3):
     """
     Performs basic sanity checks on the audio dataset.
     """
-    base_dir = Path(__file__).parent.parent.parent
-    figures_dir = base_dir / "reports" / "figures"
-    figures_dir.mkdir(parents=True, exist_ok=True)
+    FIGURES_DIR.mkdir(parents=True, exist_ok=True)
+    figures_dir = FIGURES_DIR
     
     # Load labels
     df = pd.read_csv(labels_file)
@@ -105,8 +106,4 @@ def check_signal_stats(audio_dir, labels_file, num_samples=3):
                 print(f"    Error analyzing {filename}: {e}")
 
 if __name__ == "__main__":
-    base_dir = Path(__file__).parent.parent.parent
-    audio_dir = base_dir / "data" / "processed" / "audio"
-    labels_file = base_dir / "data" / "processed" / "labels.csv"
-    
-    check_signal_stats(audio_dir, labels_file)
+    check_signal_stats(AUDIO_DIR, LABELS_CSV)

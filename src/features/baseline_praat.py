@@ -6,15 +6,21 @@ from tqdm import tqdm
 from typing import Dict, Union, Any
 import logging
 
+from src.config import (
+    AUDIO_DIR, LABELS_CSV, BASELINE_FEATURES_CSV,
+    PRAAT_PITCH_FLOOR, PRAAT_PITCH_CEILING, 
+    PRAAT_SILENCE_THRESHOLD, PRAAT_VOICING_THRESHOLD
+)
+
 # -----------------------------
 # Configuration
 # -----------------------------
-PITCH_FLOOR = 75.0
-PITCH_CEILING = 600.0  # Increased slightly to cover higher pitched voices
+PITCH_FLOOR = PRAAT_PITCH_FLOOR
+PITCH_CEILING = PRAAT_PITCH_CEILING
 TIME_STEP = None  # None for auto
 MAX_CANDIDATES = 15
-SILENCE_THRESHOLD = 0.03
-VOICING_THRESHOLD = 0.45
+SILENCE_THRESHOLD = PRAAT_SILENCE_THRESHOLD
+VOICING_THRESHOLD = PRAAT_VOICING_THRESHOLD
 OCTAVE_COST = 0.01
 OCTAVE_JUMP_COST = 0.35
 VOICED_UNVOICED_COST = 0.14
@@ -22,10 +28,7 @@ VOICED_UNVOICED_COST = 0.14
 # -----------------------------
 # Paths
 # -----------------------------
-BASE_DIR = Path(__file__).parent.parent.parent
-AUDIO_DIR = BASE_DIR / "data" / "processed" / "audio"
-LABELS_CSV = BASE_DIR / "data" / "processed" / "labels.csv"
-OUTPUT_CSV = BASE_DIR / "data" / "processed" / "baseline_features.csv"
+OUTPUT_CSV = BASELINE_FEATURES_CSV
 
 # Configure logging
 logging.basicConfig(

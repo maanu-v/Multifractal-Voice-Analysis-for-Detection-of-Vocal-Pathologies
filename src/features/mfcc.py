@@ -9,22 +9,24 @@ import logging
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from src.config import (
+    AUDIO_DIR, LABELS_CSV, MFCC_FEATURES_CSV, MFCC_REPORTS_DIR,
+    TARGET_SR, MFCC_N_MFCC, MFCC_N_FFT, MFCC_HOP_LENGTH
+)
+
 # -----------------------------
 # Configuration
 # -----------------------------
-TARGET_SR = 16000
-N_MFCC = 13
-N_FFT = int(0.025 * TARGET_SR)   # 25 ms -> 400 samples
-HOP_LENGTH = int(0.010 * TARGET_SR)  # 10 ms -> 160 samples
+TARGET_SR = TARGET_SR
+N_MFCC = MFCC_N_MFCC
+N_FFT = MFCC_N_FFT
+HOP_LENGTH = MFCC_HOP_LENGTH
 
 # -----------------------------
 # Paths
 # -----------------------------
-BASE_DIR = Path(__file__).parent.parent.parent
-AUDIO_DIR = BASE_DIR / "data" / "processed" / "audio"
-LABELS_CSV = BASE_DIR / "data" / "processed" / "labels.csv"
-OUTPUT_CSV = BASE_DIR / "data" / "processed" / "mfcc_features.csv"
-REPORTS_DIR = BASE_DIR / "reports" / "mfcc"
+OUTPUT_CSV = MFCC_FEATURES_CSV
+REPORTS_DIR = MFCC_REPORTS_DIR
 REPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Configure logging
