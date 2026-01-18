@@ -18,6 +18,7 @@ MFCC_REPORTS_DIR = REPORTS_DIR / "mfcc"
 # Feature Files
 BASELINE_FEATURES_CSV = PROCESSED_DIR / "baseline_features.csv"
 MFCC_FEATURES_CSV = PROCESSED_DIR / "mfcc_features.csv"
+CLASSIC_FEATURES_CSV = PROCESSED_DIR / "classic_features.csv"
 
 # -----------------------------
 # Audio Settings
