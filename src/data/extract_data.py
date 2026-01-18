@@ -1,6 +1,8 @@
 import os
 import shutil
 import csv
+import nspfile
+from scipy.io import wavfile
 from collections import Counter
 from pathlib import Path
 
@@ -44,20 +46,27 @@ def main():
                 
                 # Filter for *-a_n.nsp files
                 for file_path in vowels_path.glob("*-a_n.nsp"):
-                    filename = file_path.name
+                    filename_stem = file_path.stem
+                    filename = f"{filename_stem}.wav"
                     target_path = audio_output_dir / filename
                     
-                    # Copy file
-                    shutil.copy2(file_path, target_path)
-                    
-                    # Append metadata
-                    extracted_data.append({
-                        "filename": filename,
-                        "category": category,
-                        "pathology": pathology,
-                        "speaker_id": speaker_id
-                    })
-                    print(f"Extracted: {filename} ({category} / {pathology})")
+                    try:
+                        # Read NSP file
+                        sample_rate, data = nspfile.read(str(file_path))
+                        
+                        # Write WAV file
+                        wavfile.write(target_path, sample_rate, data)
+                        
+                        # Append metadata
+                        extracted_data.append({
+                            "filename": filename,
+                            "category": category,
+                            "pathology": pathology,
+                            "speaker_id": speaker_id
+                        })
+                        print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
+                    except Exception as e:
+                        print(f"Error converting {file_path.name}: {e}")
     
         # Handle other categories (structural, neurological)
         # data/raw/<Category>/<Pathology>/<SpeakerID>/vowels/<filename>
@@ -80,20 +89,27 @@ def main():
                     
                     # Filter for *-a_n.nsp files
                     for file_path in vowels_path.glob("*-a_n.nsp"):
-                        filename = file_path.name
+                        filename_stem = file_path.stem
+                        filename = f"{filename_stem}.wav"
                         target_path = audio_output_dir / filename
                         
-                        # Copy file
-                        shutil.copy2(file_path, target_path)
-                        
-                        # Append metadata
-                        extracted_data.append({
-                            "filename": filename,
-                            "category": category,
-                            "pathology": pathology,
-                            "speaker_id": speaker_id
-                        })
-                        print(f"Extracted: {filename} ({category} / {pathology})")
+                        try:
+                            # Read NSP file
+                            sample_rate, data = nspfile.read(str(file_path))
+                            
+                            # Write WAV file
+                            wavfile.write(target_path, sample_rate, data)
+                            
+                            # Append metadata
+                            extracted_data.append({
+                                "filename": filename,
+                                "category": category,
+                                "pathology": pathology,
+                                "speaker_id": speaker_id
+                            })
+                            print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
+                        except Exception as e:
+                            print(f"Error converting {file_path.name}: {e}")
 
     # Write labels.csv
     if extracted_data:
