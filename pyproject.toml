@@ -8,5 +8,7 @@ dependencies = [
     "matplotlib>=3.10.8",
     "nspfile>=0.2.0",
     "pandas>=2.3.3",
+    "praat-parselmouth>=0.4.7",
     "scipy>=1.17.0",
+    "tqdm>=4.67.1",
 ]
