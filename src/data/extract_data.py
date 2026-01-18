@@ -2,7 +2,6 @@ import os
 import shutil
 import csv
 import nspfile
-from scipy import signal
 from scipy.io import wavfile
 from collections import Counter
 from pathlib import Path
@@ -65,17 +64,7 @@ def main():
                     
                     try:
                         # Read NSP file
-                        original_sample_rate, data = nspfile.read(str(file_path))
-                        
-                        # Resample if necessary
-                        target_sample_rate = 16000
-                        if original_sample_rate != target_sample_rate:
-                            num_samples = int(len(data) * target_sample_rate / original_sample_rate)
-                            # signal.resample returns float64, cast back to int16 for wavfile
-                            data = signal.resample(data, num_samples).astype("int16")
-                            sample_rate = target_sample_rate
-                        else:
-                            sample_rate = original_sample_rate
+                        sample_rate, data = nspfile.read(str(file_path))
                         
                         # Write WAV file
                         wavfile.write(target_path, sample_rate, data)
@@ -89,7 +78,7 @@ def main():
                         })
                         seen_speakers.add(speaker_id)
                         seen_filenames.add(filename)
-                        print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology}) [Resampled {original_sample_rate}->{sample_rate}Hz]")
+                        print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
                     except Exception as e:
                         print(f"Error converting {file_path.name}: {e}")
     
@@ -130,17 +119,7 @@ def main():
                         
                         try:
                             # Read NSP file
-                            original_sample_rate, data = nspfile.read(str(file_path))
-                            
-                            # Resample if necessary
-                            target_sample_rate = 16000
-                            if original_sample_rate != target_sample_rate:
-                                num_samples = int(len(data) * target_sample_rate / original_sample_rate)
-                                # signal.resample returns float64, cast back to int16 for wavfile
-                                data = signal.resample(data, num_samples).astype("int16")
-                                sample_rate = target_sample_rate
-                            else:
-                                sample_rate = original_sample_rate
+                            sample_rate, data = nspfile.read(str(file_path))
                             
                             # Write WAV file
                             wavfile.write(target_path, sample_rate, data)
@@ -154,7 +133,7 @@ def main():
                             })
                             seen_speakers.add(speaker_id)
                             seen_filenames.add(filename)
-                            print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology}) [Resampled {original_sample_rate}->{sample_rate}Hz]")
+                            print(f"Converted: {file_path.name} -> {filename} ({category} / {pathology})")
                         except Exception as e:
                             print(f"Error converting {file_path.name}: {e}")
 
