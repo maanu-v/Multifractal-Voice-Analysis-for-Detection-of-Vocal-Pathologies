@@ -14,6 +14,7 @@ LABELS_CSV = PROCESSED_DIR / "labels.csv"
 REPORTS_DIR = BASE_DIR / "reports"
 FIGURES_DIR = REPORTS_DIR / "figures"
 MFCC_REPORTS_DIR = REPORTS_DIR / "mfcc"
+BASELINE_MODEL_DIR = REPORTS_DIR / "baseline_model"
 
 # Feature Files
 BASELINE_FEATURES_CSV = PROCESSED_DIR / "baseline_features.csv"
