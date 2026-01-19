@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
+from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
@@ -125,6 +126,18 @@ def main():
         'clf__min_samples_split': [2, 5]
     }
 
+    # 3. SVM (RBF Kernel) Pipeline
+    svm_pipeline = Pipeline([
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler()),
+        ('clf', SVC(kernel='rbf', probability=True, random_state=42, class_weight='balanced'))
+    ])
+    
+    svm_params = {
+        'clf__C': [0.1, 1.0, 10.0, 100.0],
+        'clf__gamma': ['scale', 'auto', 0.01, 0.1]
+    }
+
     # Execution
     results = {}
     
@@ -134,6 +147,10 @@ def main():
     
     results['Random Forest'], _ = train_and_evaluate(
         "Random Forest", rf_pipeline, rf_params, X_train, y_train, X_test, y_test
+    )
+    
+    results['SVM (RBF)'], _ = train_and_evaluate(
+        "SVM (RBF)", svm_pipeline, svm_params, X_train, y_train, X_test, y_test
     )
     
     print("\n" + "="*40)
