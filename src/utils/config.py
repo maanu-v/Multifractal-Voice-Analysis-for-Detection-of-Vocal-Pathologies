@@ -56,3 +56,4 @@ MFDFA_FEATURES_CSV = FEATURES_DIR / "mfdfa_features.csv"
 
 # Merged Feature Sets
 BASELINE_FD_FEATURES_CSV = FEATURES_DIR / "fd_features.csv"
+MULTIFRACTAL_FEATURES_CSV = FEATURES_DIR / "multifractal_features.csv"
