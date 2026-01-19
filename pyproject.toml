@@ -8,6 +8,7 @@ dependencies = [
     "librosa>=0.11.0",
     "matplotlib>=3.10.8",
     "nspfile>=0.2.0",
+    "numba>=0.63.1",
     "pandas>=2.3.3",
     "praat-parselmouth>=0.4.7",
     "scipy>=1.17.0",
