@@ -95,6 +95,7 @@ def main():
             logger.warning(f"Wavelet FD extraction failed for {row['filename']}: {e}")
 
     df = pd.DataFrame(features)
+    WAVELET_FD_FEATURES_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(WAVELET_FD_FEATURES_CSV, index=False)
 
     logger.info("Wavelet FD extraction complete.")

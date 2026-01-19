@@ -1,7 +1,13 @@
+import numpy as np
+import pandas as pd
+import parselmouth
+from pathlib import Path
+from tqdm import tqdm
 from typing import Dict, Union, Any
+
 from src.utils.logger import get_logger
 from src.utils.config import (
-    AUDIO_DIR, LABELS_CSV, BASELINE_FEATURES_CSV,
+    AUDIO_DIR, LABELS_CSV, PRAAT_FEATURES_CSV,
     PRAAT_PITCH_FLOOR, PRAAT_PITCH_CEILING, 
     PRAAT_SILENCE_THRESHOLD, PRAAT_VOICING_THRESHOLD
 )
@@ -24,7 +30,7 @@ VOICED_UNVOICED_COST = 0.14
 # -----------------------------
 # Paths
 # -----------------------------
-OUTPUT_CSV = BASELINE_FEATURES_CSV
+OUTPUT_CSV = PRAAT_FEATURES_CSV
 
 # -----------------------------
 # Feature extraction function
@@ -152,6 +158,7 @@ def main():
         print(nan_counts[nan_counts > 0])
 
     # Save
+    OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False)
     
     logger.info("Baseline feature extraction complete.")

@@ -7,7 +7,7 @@ import numba
 
 from src.utils.logger import get_logger
 from src.utils.config import (
-    AUDIO_DIR, LABELS_CSV, FD_FEATURES_CSV, 
+    AUDIO_DIR, LABELS_CSV, HIGUCHI_FD_FEATURES_CSV, 
     TARGET_SR, HIGUCHI_K_MAX
 )
 
@@ -114,10 +114,11 @@ def main():
             logger.warning(f"FD failed for {row['filename']}: {e}")
 
     df = pd.DataFrame(features)
-    df.to_csv(FD_FEATURES_CSV, index=False)
+    HIGUCHI_FD_FEATURES_CSV.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(HIGUCHI_FD_FEATURES_CSV, index=False)
 
     logger.info("Higuchi FD extraction complete.")
-    logger.info(f"Saved to: {FD_FEATURES_CSV}")
+    logger.info(f"Saved to: {HIGUCHI_FD_FEATURES_CSV}")
 
     # Summary Statistics
     desc = df.groupby("category")["FD_full"].describe()

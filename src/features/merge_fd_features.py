@@ -2,9 +2,9 @@ import pandas as pd
 from src.utils.logger import get_logger
 from src.utils.config import (
     CLASSIC_FEATURES_CSV, 
-    FD_FEATURES_CSV, 
+    HIGUCHI_FD_FEATURES_CSV, 
     WAVELET_FD_FEATURES_CSV, 
-    FEATURES_SET_B_CSV
+    BASELINE_FD_FEATURES_CSV
 )
 
 logger = get_logger(__name__)
@@ -12,12 +12,12 @@ logger = get_logger(__name__)
 def main():
     logger.info("Loading feature files...")
 
-    if not CLASSIC_FEATURES_CSV.exists() or not FD_FEATURES_CSV.exists() or not WAVELET_FD_FEATURES_CSV.exists():
+    if not CLASSIC_FEATURES_CSV.exists() or not HIGUCHI_FD_FEATURES_CSV.exists() or not WAVELET_FD_FEATURES_CSV.exists():
         logger.error("One or more feature files are missing.")
         return
 
     df_base = pd.read_csv(CLASSIC_FEATURES_CSV)
-    df_fd = pd.read_csv(FD_FEATURES_CSV)
+    df_fd = pd.read_csv(HIGUCHI_FD_FEATURES_CSV)
     df_wfd = pd.read_csv(WAVELET_FD_FEATURES_CSV)
 
     logger.info(f"Classic: {df_base.shape}")
@@ -42,8 +42,9 @@ def main():
     logger.info(f"Final shape: {df.shape}")
     
     # Save
-    df.to_csv(FEATURES_SET_B_CSV, index=False)
-    logger.info(f"Saved merged feature set to {FEATURES_SET_B_CSV}")
+    BASELINE_FD_FEATURES_CSV.parent.mkdir(parents=True, exist_ok=True)
+    df.to_csv(BASELINE_FD_FEATURES_CSV, index=False)
+    logger.info(f"Saved merged feature set to {BASELINE_FD_FEATURES_CSV}")
 
 if __name__ == "__main__":
     main()

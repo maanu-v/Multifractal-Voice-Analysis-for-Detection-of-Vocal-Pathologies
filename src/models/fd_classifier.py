@@ -13,7 +13,7 @@ from sklearn.metrics import classification_report, confusion_matrix, accuracy_sc
 from sklearn.impute import SimpleImputer
 
 from src.utils.logger import get_logger
-from src.utils.config import FEATURES_SET_B_CSV, FD_MODEL_DIR
+from src.utils.config import BASELINE_FD_FEATURES_CSV, FD_MODEL_DIR
 
 logger = get_logger(__name__)
 
@@ -71,13 +71,13 @@ def train_and_evaluate(name, pipeline, param_grid, X_train, y_train, X_test, y_t
     return acc_tuned, best_model
 
 def main():
-    if not FEATURES_SET_B_CSV.exists():
-        logger.error(f"Data file not found: {FEATURES_SET_B_CSV}")
+    if not BASELINE_FD_FEATURES_CSV.exists():
+        logger.error(f"Data file not found: {BASELINE_FD_FEATURES_CSV}")
         return
 
     # Load Data
     logger.info("Loading data from Set B (Fractal Features)...")
-    df = pd.read_csv(FEATURES_SET_B_CSV)
+    df = pd.read_csv(BASELINE_FD_FEATURES_CSV)
     
     # Separate X and y
     target_col = "category"

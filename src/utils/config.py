@@ -9,6 +9,7 @@ RAW_DATA_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 AUDIO_DIR = PROCESSED_DIR / "audio"
 LABELS_CSV = PROCESSED_DIR / "labels.csv"
+FEATURES_DIR = PROCESSED_DIR / "features"
 
 # Reports
 REPORTS_DIR = BASE_DIR / "reports"
@@ -18,9 +19,9 @@ BASELINE_MODEL_DIR = REPORTS_DIR / "baseline_model"
 FD_MODEL_DIR = REPORTS_DIR / "fd_model"
 
 # Feature Files
-BASELINE_FEATURES_CSV = PROCESSED_DIR / "baseline_features.csv"
-MFCC_FEATURES_CSV = PROCESSED_DIR / "mfcc_features.csv"
-CLASSIC_FEATURES_CSV = PROCESSED_DIR / "classic_features.csv"
+PRAAT_FEATURES_CSV = FEATURES_DIR / "praat_features.csv"
+MFCC_FEATURES_CSV = FEATURES_DIR / "mfcc_features.csv"
+CLASSIC_FEATURES_CSV = FEATURES_DIR / "classic_features.csv"
 
 # -----------------------------
 # Audio Settings
@@ -43,12 +44,12 @@ MFCC_HOP_LENGTH = int(0.010 * TARGET_SR)  # 10 ms
 
 # Higuchi FD
 HIGUCHI_K_MAX = 10
-FD_FEATURES_CSV = PROCESSED_DIR / "fd_features.csv"
+HIGUCHI_FD_FEATURES_CSV = FEATURES_DIR / "higuchi_fd_features.csv"
 
 # Wavelet FD
 WAVELET_NAME = "db4"
 WAVELET_LEVEL = 3
-WAVELET_FD_FEATURES_CSV = PROCESSED_DIR / "wavelet_fd_features.csv"
+WAVELET_FD_FEATURES_CSV = FEATURES_DIR / "wavelet_fd_features.csv"
 
 # Merged Feature Sets
-FEATURES_SET_B_CSV = PROCESSED_DIR / "features_set_B.csv"
+BASELINE_FD_FEATURES_CSV = FEATURES_DIR / "fd_features.csv"

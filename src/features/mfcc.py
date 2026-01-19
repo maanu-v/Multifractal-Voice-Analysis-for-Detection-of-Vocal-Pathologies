@@ -1,5 +1,12 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
+import pandas as pd
+import librosa
+import librosa.display
+from pathlib import Path
+from tqdm import tqdm
+from typing import Union, Dict
 
 from src.utils.logger import get_logger
 from src.utils.config import (
@@ -170,6 +177,7 @@ def main():
             logger.warning("Some features contain NaNs:")
             print(nan_counts[nan_counts > 0])
             
+    OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False)
 
     logger.info("MFCC feature extraction complete.")
