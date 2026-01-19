@@ -48,3 +48,6 @@ FD_FEATURES_CSV = PROCESSED_DIR / "fd_features.csv"
 WAVELET_NAME = "db4"
 WAVELET_LEVEL = 3
 WAVELET_FD_FEATURES_CSV = PROCESSED_DIR / "wavelet_fd_features.csv"
+
+# Merged Feature Sets
+FEATURES_SET_B_CSV = PROCESSED_DIR / "features_set_B.csv"
