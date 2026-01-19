@@ -43,3 +43,8 @@ MFCC_HOP_LENGTH = int(0.010 * TARGET_SR)  # 10 ms
 # Higuchi FD
 HIGUCHI_K_MAX = 10
 FD_FEATURES_CSV = PROCESSED_DIR / "fd_features.csv"
+
+# Wavelet FD
+WAVELET_NAME = "db4"
+WAVELET_LEVEL = 3
+WAVELET_FD_FEATURES_CSV = PROCESSED_DIR / "wavelet_fd_features.csv"
