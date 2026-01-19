@@ -51,5 +51,8 @@ WAVELET_NAME = "db4"
 WAVELET_LEVEL = 3
 WAVELET_FD_FEATURES_CSV = FEATURES_DIR / "wavelet_fd_features.csv"
 
+# MF-DFA
+MFDFA_FEATURES_CSV = FEATURES_DIR / "mfdfa_features.csv"
+
 # Merged Feature Sets
 BASELINE_FD_FEATURES_CSV = FEATURES_DIR / "fd_features.csv"
