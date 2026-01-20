@@ -17,6 +17,9 @@ FIGURES_DIR = REPORTS_DIR / "figures"
 MFCC_REPORTS_DIR = REPORTS_DIR / "mfcc"
 BASELINE_MODEL_DIR = REPORTS_DIR / "baseline_model"
 FD_MODEL_DIR = REPORTS_DIR / "fd_model"
+MULTIFRACTAL_MODEL_DIR = REPORTS_DIR / "multifractal_model"
+FD_MFDFA_MODEL_DIR = REPORTS_DIR / "fd_mfdfa_model"
+MULTICLASS_MODEL_DIR = REPORTS_DIR / "multiclass_model"
 
 # Feature Files
 PRAAT_FEATURES_CSV = FEATURES_DIR / "praat_features.csv"
@@ -57,3 +60,4 @@ MFDFA_FEATURES_CSV = FEATURES_DIR / "mfdfa_features.csv"
 # Merged Feature Sets
 BASELINE_FD_FEATURES_CSV = FEATURES_DIR / "fd_features.csv"
 MULTIFRACTAL_FEATURES_CSV = FEATURES_DIR / "multifractal_features.csv"
+FD_MFDFA_FEATURES_CSV = FEATURES_DIR / "fd_mfdfa_features.csv"
